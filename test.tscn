@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="GDScript" id=3]
+
+script/source = "extends Spatial
+
+func _ready():
+	pass
+
+func _process(delta: float) -> void:
+	translate(Vector3.FORWARD * 10.0 * delta);
+"
+
+[sub_resource type="SpatialMaterial" id=1]
+
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="SphereMesh" id=2]
+
+
+[node name="test" type="Spatial"]
+script = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 0.076932, 0, 0, 0, 0.076932, 0, 0, 0, 0.076932, 0, 0, 0 )
+material_override = SubResource( 1 )
+mesh = SubResource( 2 )
+material/0 = null
+
