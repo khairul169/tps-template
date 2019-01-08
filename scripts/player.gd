@@ -60,7 +60,7 @@ func _integrate_forces(state: PhysicsDirectBodyState) -> void:
 
 func _process(delta: float) -> void:
 	# look direction
-	var look_dir = Vector3.FORWARD;
+	var look_dir = Vector3.ZERO;
 	
 	# horizontal velocity
 	var hvel = Vector3(velocity.x, 0.0, velocity.z);
@@ -73,9 +73,10 @@ func _process(delta: float) -> void:
 		look_dir = look_dir.normalized();
 	
 	# rotate body node
-	var rot_a = Quat(body.transform.basis);
-	var rot_b = Quat(body.transform.looking_at(look_dir, Vector3.UP).basis);
-	body.transform.basis = Basis(rot_a.slerp(rot_b, 10.0 * delta));
+	if (look_dir.length() > 0.0):
+		var rot_a = Quat(body.transform.basis);
+		var rot_b = Quat(body.transform.looking_at(look_dir, Vector3.UP).basis);
+		body.transform.basis = Basis(rot_a.slerp(rot_b, 10.0 * delta));
 
 func _input(event: InputEvent) -> void:
 	if (event is InputEventMouseButton && event.pressed):
