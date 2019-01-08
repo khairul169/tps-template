@@ -8,6 +8,7 @@ const JUMP_FORCE = 10.0;
 # refs
 onready var camera = $camera;
 onready var body = $body;
+onready var test_ray = $test_ray;
 
 # vars
 var velocity = Vector3.ZERO;
@@ -46,8 +47,9 @@ func _integrate_forces(state: PhysicsDirectBodyState) -> void:
 	velocity = velocity.linear_interpolate(dir, ACCELERATION * state.step);
 	
 	# jump
+	var on_floor = test_ray.is_colliding();
 	if (Input.is_key_pressed(KEY_SPACE)):
-		if (!has_jump):
+		if (!has_jump && on_floor):
 			velocity.y = JUMP_FORCE;
 		has_jump = true;
 	else:
